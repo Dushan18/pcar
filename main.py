@@ -1,4 +1,5 @@
 # main.py
+import sys
 import os
 import asyncio
 import base64
@@ -33,6 +34,10 @@ from services.recompensas import (
 from services.redam import consulta_redam_dni
 from services.buscardniperu import consulta_dni_por_nombres
 from services.dniperu import consulta_dni_peru
+
+# FIX obligatorio para Windows + Playwright
+if sys.platform.startswith("win"):
+    asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
 
 load_dotenv()
 
