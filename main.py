@@ -109,8 +109,21 @@ async def lifespan(app: FastAPI):
 
     pw = await async_playwright().start()
     headless = os.getenv("HEADLESS", "1").lower() not in {"0", "false"}
+    proxy_server = os.getenv("PW_PROXY_SERVER") or os.getenv("PROXY_SERVER")
+    proxy_username = os.getenv("PW_PROXY_USERNAME") or os.getenv("PROXY_USERNAME")
+    proxy_password = os.getenv("PW_PROXY_PASSWORD") or os.getenv("PROXY_PASSWORD")
+    proxy = None
+    if proxy_server:
+        proxy = {"server": proxy_server}
+        if proxy_username:
+            proxy["username"] = proxy_username
+        if proxy_password:
+            proxy["password"] = proxy_password
     # --no-sandbox evita errores en entornos sin sandbox de Chrome (contenedores, CI)
-    browser = await pw.chromium.launch(headless=headless, args=["--no-sandbox"])
+    launch_kwargs = {"headless": headless, "args": ["--no-sandbox"]}
+    if proxy:
+        launch_kwargs["proxy"] = proxy
+    browser = await pw.chromium.launch(**launch_kwargs)
 
     app.state.pw = pw
     app.state.browser = browser

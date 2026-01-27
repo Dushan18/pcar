@@ -811,8 +811,8 @@ def _parse_propietario_nombre(nombre: str) -> dict:
     - nombres
 
     Ejemplos esperados:
-      "OJEDA CHAMORRO, WILBERT" -> ap_paterno=OJEDA, ap_materno=CHAMORRO, nombres=WILBERT
-      "PEREZ GARCIA JUAN CARLOS" -> ap_paterno=PEREZ, ap_materno=GARCIA, nombres=JUAN CARLOS
+        "OJEDA CHAMORRO, WILBERT" -> ap_paterno=OJEDA, ap_materno=CHAMORRO, nombres=WILBERT
+        "PEREZ GARCIA JUAN CARLOS" -> ap_paterno=PEREZ, ap_materno=GARCIA, nombres=JUAN CARLOS
     """
     original = nombre
     nombre = nombre.strip()
